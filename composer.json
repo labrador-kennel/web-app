@@ -4,24 +4,29 @@
   "license": ["MIT"],
   "minimum-stability": "beta",
   "require": {
-    "php": "^8.1",
-    "amphp/http-server-static-content": "^2.0@beta",
+    "php": "^8.2",
+    "ext-pcntl": "*",
+    "amphp/postgres": "^v2.0",
+    "cspray/annotated-container-secrets": "dev-main",
+    "doctrine/migrations": "^3.6",
     "labrador-kennel/framework": "dev-main",
-    "labrador-kennel/async-event-autowire": "dev-main",
-    "league/plates": "^3.5"
+    "league/plates": "^3.5",
+    "voku/stringy": "^6.5"
   },
   "require-dev": {
+    "cspray/database-test-case": "^0.3",
     "phpunit/phpunit": "^10.0",
     "psalm/phar": "^5.11"
   },
   "autoload": {
     "psr-4": {
-      "App\\": "src"
+      "App\\": "src",
+      "App\\Migrations\\": "resources/database/migrations"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "App\\": "tests"
+      "App\\Tests\\": "tests"
     }
   }
 }

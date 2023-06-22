@@ -18,7 +18,8 @@ composer: _clean-composer
 
 # Update composer dependencies on the container and populate vendor on host
 composer-update: _clean-composer
-    docker buildx build . --target=composer-output-updated --file=docker/php/Dockerfile --output=.
+    docker buildx build . --target=composer-output-updated --file=docker/php/Dockerfile --output=. --no-cache
+    @just build
 
 _clean-composer:
     rm -rf vendor
@@ -31,6 +32,10 @@ up:
 down:
     docker compose down --remove-orphans
 
+serve: build up
+
+serve-with-logs: serve logs-follow
+
 # Reload the application server, loading any code changes
 reload timeout='0':
     docker compose restart app --no-deps --timeout {{timeout}}
@@ -42,3 +47,20 @@ logs compose_service='app':
 # Follow the logs for the given docker compose service
 logs-follow compose_service='app':
     docker compose logs {{compose_service}} --follow
+
+migration-create:
+    ./vendor/bin/doctrine-migrations migrations:generate --configuration=./resources/database/migrations-config.php
+
+migrate-dev-env: _migrate-dev _migrate-test
+
+_migrate-dev:
+    docker compose run -e PROFILES="default,dev,docker,migrations" --rm --entrypoint="vendor/bin/doctrine-migrations migrate --configuration=/app/resources/database/migrations-config.php --db-configuration=/app/resources/database/migrations-conn.php --no-interaction" toolbox
+
+_migrate-test:
+    docker compose run -e PROFILES="default,test,docker,migrations" --rm --entrypoint="vendor/bin/doctrine-migrations migrate --configuration=/app/resources/database/migrations-config.php --db-configuration=/app/resources/database/migrations-conn.php --no-interaction" toolbox
+
+migrate-prod:
+    docker compose run -e PROFILES="default,prod,docker,migrations" --rm --entrypoint="vendor/bin/doctrine-migrations migrate --configuration=/app/resources/database/migrations-config.php --db-configuration=/app/resources/database/migrations-conn.php --no-interaction" toolbox
+
+test:
+    docker compose run -e PROFILES="default,test,docker" --rm --entrypoint="vendor/bin/phpunit" toolbox

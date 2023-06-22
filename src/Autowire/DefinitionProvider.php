@@ -2,6 +2,7 @@
 
 namespace App\Autowire;
 
+use Amp\Postgres\PostgresLink;
 use Cspray\AnnotatedContainer\StaticAnalysis\DefinitionProvider as AnnotatedContainerDefinitionProvider;
 use Cspray\AnnotatedContainer\StaticAnalysis\DefinitionProviderContext;
 use League\Plates\Engine;
@@ -14,6 +15,7 @@ final class DefinitionProvider implements AnnotatedContainerDefinitionProvider {
     public function consume(DefinitionProviderContext $context) : void {
         service($context, objectType(Engine::class));
         service($context, objectType(LoggerInterface::class));
+        service($context, objectType(PostgresLink::class));
     }
 
 }

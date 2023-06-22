@@ -7,8 +7,6 @@ services:
       dockerfile: docker/postgres/Dockerfile
     volumes:
       - pgdata:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=password
     networks:
@@ -22,14 +20,8 @@ services:
     depends_on:
       database:
         condition: service_healthy
-    ports:
-      - "8118:80"
-    volumes:
-      - ./resources:/app/resources
-      - ./src:/app/src
-      - ./tests:/app/tests
     environment:
-      - PROFILES=default,dev,docker
+      - PROFILES=default,dev,docker,web
     networks:
       web-app:
 
@@ -43,12 +35,8 @@ services:
     depends_on:
       database:
         condition: service_healthy
-    volumes:
-      - ./resources:/app/resources
-      - ./src:/app/src
-      - ./tests:/app/tests
     environment:
-      - PROFILES=default,dev,docker
+      - PROFILES=default,dev,docker,toolbox
     networks:
       web-app:
 

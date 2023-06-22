@@ -23,5 +23,8 @@
     <observer>Labrador\AsyncEvent\Autowire\Observer</observer>
     <observer>Labrador\Web\Autowire\Observer</observer>
   </observers>
+  <parameterStores>
+    <parameterStore>config</parameterStore>
+  </parameterStores>
   <!-- <cacheDir>.annotated-container-cache</cacheDir> -->
 </annotatedContainer>

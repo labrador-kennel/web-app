@@ -76,6 +76,7 @@ RUN --mount=type=cache,target=/root/.composer \
 
 FROM php-with-code AS http-server
 
+COPY --link app.php app.php
 COPY --link --from=composer-prod /app/vendor vendor
 
 RUN --mount=type=cache,target=/root/.composer \
@@ -86,5 +87,4 @@ RUN --mount=type=cache,target=/root/.composer \
 
 HEALTHCHECK --interval=10s --start-period=10s --retries=5 --timeout=5s CMD curl --fail http://localhost/health-check
 
-EXPOSE 80
-ENTRYPOINT ["/app/vendor/bin/labrador", "serve", "--bootstrap=/app/resources/scripts/container-bootstrap.php", "--profiles=default,dev"]
+ENTRYPOINT ["php", "/app/app.php"]
