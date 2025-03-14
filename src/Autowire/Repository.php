@@ -11,7 +11,7 @@ final class Repository implements ServiceAttribute {
         private readonly array $profiles = []
     ) {}
 
-    public function getProfiles() : array {
+    public function profiles() : array {
         return $this->profiles;
     }
 
@@ -19,7 +19,7 @@ final class Repository implements ServiceAttribute {
         return false;
     }
 
-    public function getName() : ?string {
+    public function name() : ?string {
         return null;
     }
 }

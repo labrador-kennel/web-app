@@ -7,15 +7,15 @@ use Cspray\AnnotatedContainer\StaticAnalysis\DefinitionProvider as AnnotatedCont
 use Cspray\AnnotatedContainer\StaticAnalysis\DefinitionProviderContext;
 use League\Plates\Engine;
 use Psr\Log\LoggerInterface;
-use function Cspray\AnnotatedContainer\service;
-use function Cspray\Typiphy\objectType;
+use function Cspray\AnnotatedContainer\Definition\service;
+use function Cspray\AnnotatedContainer\Reflection\types;
 
 final class DefinitionProvider implements AnnotatedContainerDefinitionProvider {
 
     public function consume(DefinitionProviderContext $context) : void {
-        service($context, objectType(Engine::class));
-        service($context, objectType(LoggerInterface::class));
-        service($context, objectType(PostgresLink::class));
+        $context->addServiceDefinition(service(types()->class(Engine::class)));
+        $context->addServiceDefinition(service(types()->class(LoggerInterface::class)));
+        $context->addServiceDefinition(service(types()->class(PostgresLink::class)));
     }
 
 }

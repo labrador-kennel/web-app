@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-use Amp\Sql\Common\ConnectionPool;
+use Amp\Sql\Common\SqlCommonConnectionPool;
 
 return [
     'database' => 'postgres',
@@ -9,5 +9,5 @@ return [
     'port' => 5432,
     'user' => '',
     'password' => '',
-    'poolConnectionLimit' => ConnectionPool::DEFAULT_MAX_CONNECTIONS,
+    'poolConnectionLimit' => SqlCommonConnectionPool::DEFAULT_MAX_CONNECTIONS,
 ];

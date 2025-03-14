@@ -23,15 +23,15 @@ final class ServerConfigurationTest extends TestCase {
     }
 
     public function testTotalConnectionLimit() : void {
-        self::assertSame(1000, $this->subject->getTotalClientConnectionLimit());
+        self::assertSame(1000, $this->subject->totalClientConnectionLimit());
     }
 
     public function testConnectionLimitPerClient() : void {
-        self::assertSame(10, $this->subject->getClientConnectionLimitPerIpAddress());
+        self::assertSame(10, $this->subject->clientConnectionLimitPerIpAddress());
     }
 
     public function testUnencryptedInternetAddresses() : void {
-        $addresses = $this->subject->getUnencryptedInternetAddresses();
+        $addresses = $this->subject->unencryptedInternetAddresses();
 
         self::assertCount(1, $addresses);
         self::assertSame('0.0.0.0:80', $addresses[0]->toString());
@@ -39,7 +39,7 @@ final class ServerConfigurationTest extends TestCase {
     }
 
     public function testEncryptedInternetAddress() : void {
-        $addresses = $this->subject->getEncryptedInternetAddresses();
+        $addresses = $this->subject->encryptedInternetAddresses();
 
         self::assertCount(1, $addresses);
         self::assertSame('0.0.0.0:443', $addresses[0]->toString());
@@ -47,7 +47,7 @@ final class ServerConfigurationTest extends TestCase {
     }
 
     public function testTlsCertificatePath() : void {
-        self::assertSame(__FILE__, $this->subject->getTlsCertificateFile());
+        self::assertSame(__FILE__, $this->subject->tlsCertificateFile());
     }
 
 }

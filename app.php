@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-use App\ContainerBootstrap;
-use Cspray\AnnotatedContainer\Profiles\CsvActiveProfilesParser;
-use Labrador\Web\Bootstrap as WebBootstrap;
+use App\ApplicationBootstrap;
+use Cspray\AnnotatedContainer\Profiles;
+use Labrador\Web\Application\Application;
 use function Amp\trapSignal;
 
 (static function() {
@@ -12,10 +12,10 @@ use function Amp\trapSignal;
     if (!is_string($profiles)) {
         throw new RuntimeException('An environment variable named PROFILES must be provided with a comma-separated list of active profiles.');
     }
+    $profiles = Profiles::fromCommaDelimitedString($profiles);
 
-    $profiles = (new CsvActiveProfilesParser())->parse($profiles);
-
-    $app = (new WebBootstrap((new ContainerBootstrap())->createContainerBootstrap($profiles), $profiles))->bootstrapApplication();
+    $container = (new ApplicationBootstrap())->bootstrapContainer($profiles);
+    $app = $container->get(Application::class);
 
     $app->start();
 

@@ -8,11 +8,11 @@ use Amp\Http\Server\Session\SessionFactory;
 use Amp\Http\Server\Session\SessionMiddleware;
 use Amp\Sync\LocalKeyedMutex;
 use Cspray\AnnotatedContainer\Attribute\Service;
-use Labrador\Web\Application\ApplicationFeatures;
+use Labrador\Web\Application\ApplicationSettings;
 use Labrador\Web\Application\StaticAssetSettings;
 
 #[Service(primary: true)]
-final readonly class LabradorConfig implements ApplicationFeatures {
+final readonly class LabradorConfig implements ApplicationSettings {
 
     public function __construct(
         private ApplicationConfig $config
@@ -28,17 +28,10 @@ final readonly class LabradorConfig implements ApplicationFeatures {
         );
     }
 
-    public function autoRedirectHttpToHttps() : bool {
-        return $this->config->autoRedirectHttps;
-    }
-
-    public function getHttpsRedirectPort() : ?int {
-        return $this->config->autoRedirectHttpsPort;
-    }
-
     public function getStaticAssetSettings() : ?StaticAssetSettings {
         return new StaticAssetSettings(
-            $this->config->staticAssetDir
+            $this->config->staticAssetDir,
+            $this->config->staticAssetUrlPrefix
         );
     }
 

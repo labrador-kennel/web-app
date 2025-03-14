@@ -1,6 +1,12 @@
 <?php declare(strict_types=1);
 
+use App\ApplicationBootstrap;
+use App\Configuration\DatabaseConfig;
+use Cspray\AnnotatedContainer\Event\Emitter;
+use Cspray\AnnotatedContainer\Profiles;
 use Doctrine\DBAL\DriverManager;
+use Labrador\AsyncEvent\Autowire\RegisterAutowiredListener;
+use Labrador\Web\Autowire\RegisterControllerListener;
 
 $profiles = getenv('PROFILES');
 if ($profiles === false) {
@@ -8,12 +14,12 @@ if ($profiles === false) {
         'You MUST provide a comma-separated list of profiles to use when running migrations.'
     );
 }
-$profiles = (new \Cspray\AnnotatedContainer\Profiles\CsvActiveProfilesParser())->parse($profiles);
+$profiles = Profiles::fromCommaDelimitedString($profiles);
 
-$container = (new \App\ContainerBootstrap(new \Psr\Log\NullLogger()))->createContainerBootstrap($profiles)->bootstrapContainer($profiles);
-$dbConfig = $container->get(\App\Configuration\DatabaseConfig::class);
+$container = (new ApplicationBootstrap())->bootstrapContainer($profiles);
+$dbConfig = $container->get(DatabaseConfig::class);
 
-assert($dbConfig instanceof \App\Configuration\DatabaseConfig);
+assert($dbConfig instanceof DatabaseConfig);
 
 $connection = DriverManager::getConnection([
     'dbname' => $dbConfig->database,

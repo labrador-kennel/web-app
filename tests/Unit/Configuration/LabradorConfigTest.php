@@ -4,6 +4,8 @@ namespace App\Tests\Unit\Configuration;
 
 use App\Configuration\ApplicationConfig;
 use App\Configuration\LabradorConfig;
+use Labrador\AsyncEvent\AmpEmitter;
+use Labrador\AsyncEvent\Emitter;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -20,8 +22,7 @@ final class LabradorConfigTest extends TestCase {
         $applicationConfig = new ApplicationConfig(
             'template-dir',
             'static-asset-dir',
-            true,
-            9118
+            'assets'
         );
         $this->subject = new LabradorConfig($applicationConfig);
     }
@@ -34,16 +35,12 @@ final class LabradorConfigTest extends TestCase {
         self::assertSame('assets', $settings->pathPrefix);
     }
 
-    public function testGetAutoRedirectToHttps() : void {
-        self::assertTrue($this->subject->autoRedirectHttpToHttps());
-    }
-
-    public function testGetAutoRedirectHttpsPort() : void {
-        self::assertSame(9118, $this->subject->getHttpsRedirectPort());
-    }
-
     public function testGetSessionMiddleware() : void {
         self::assertNotNull($this->subject->getSessionMiddleware());
+    }
+
+    public function testGetAmpEmitter() : void {
+        self::assertInstanceOf(Emitter::class, new AmpEmitter());
     }
 
 }

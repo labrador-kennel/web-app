@@ -57,10 +57,10 @@ _migrate-dev:
     docker compose run -e PROFILES="default,dev,docker,migrations" --rm --entrypoint="vendor/bin/doctrine-migrations migrate --configuration=/app/resources/database/migrations-config.php --db-configuration=/app/resources/database/migrations-conn.php --no-interaction" toolbox
 
 _migrate-test:
-    docker compose run -e PROFILES="default,test,docker,migrations" --rm --entrypoint="vendor/bin/doctrine-migrations migrate --configuration=/app/resources/database/migrations-config.php --db-configuration=/app/resources/database/migrations-conn.php --no-interaction" toolbox
+    docker compose run -e PROFILES="default,unit-test,docker,migrations" --rm --entrypoint="vendor/bin/doctrine-migrations migrate --configuration=/app/resources/database/migrations-config.php --db-configuration=/app/resources/database/migrations-conn.php --no-interaction" toolbox
 
 migrate-prod:
     docker compose run -e PROFILES="default,prod,docker,migrations" --rm --entrypoint="vendor/bin/doctrine-migrations migrate --configuration=/app/resources/database/migrations-config.php --db-configuration=/app/resources/database/migrations-conn.php --no-interaction" toolbox
 
 test:
-    docker compose run -e PROFILES="default,test,docker" --rm --entrypoint="vendor/bin/phpunit" toolbox
+    docker compose run -e PROFILES="default,unit-test,docker" --rm --entrypoint="vendor/bin/phpunit" toolbox

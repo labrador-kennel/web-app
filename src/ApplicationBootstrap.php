@@ -2,37 +2,34 @@
 
 namespace App;
 
-use App\Factory\LoggerFactory;
+use Cspray\AnnotatedContainer\AnnotatedContainer;
 use Cspray\AnnotatedContainer\Bootstrap\Bootstrap;
 use Cspray\AnnotatedContainer\Bootstrap\DefaultParameterStoreFactory;
 use Cspray\AnnotatedContainer\Bootstrap\DelegatedParameterStoreFactory;
+use Cspray\AnnotatedContainer\ContainerFactory\PhpDiContainerFactory;
+use Cspray\AnnotatedContainer\Event\Emitter;
+use Cspray\AnnotatedContainer\Profiles;
 use Cspray\AnnotatedContainer\Secrets\ConfigParameterStoreFactory;
 use Cspray\AnnotatedContainer\Secrets\IdentifierSourceMap;
 use Cspray\AnnotatedContainer\Secrets\PhpIncludeValueProvider;
 use Cspray\AnnotatedContainer\Secrets\ProfileAwareSource;
 use Cspray\AnnotatedContainer\Secrets\SingleValueProviderSource;
-use Psr\Log\LoggerInterface;
+use Labrador\AsyncEvent\Autowire\RegisterAutowiredListener;
+use Labrador\Web\Autowire\RegisterControllerListener;
 
-final readonly class ContainerBootstrap {
+final readonly class ApplicationBootstrap {
 
-    private LoggerInterface $logger;
+    public function __construct() {}
 
-    public function __construct(
-        LoggerInterface $logger = null
-    ) {
-        if ($logger === null) {
-            $logger = LoggerFactory::createLogger();
-        }
-
-        $this->logger = $logger;
-    }
-
-    public function createContainerBootstrap(array $profiles) : Bootstrap {
+    public function bootstrapContainer(Profiles $profiles) : AnnotatedContainer {
         $configDir = dirname(__DIR__) . '/resources/config';
+        $emitter = new Emitter();
+        $emitter->addListener(new RegisterControllerListener());
+        $emitter->addListener(new RegisterAutowiredListener());
         $factory = new ConfigParameterStoreFactory(
             (new IdentifierSourceMap())
                 ->withIdentifierAndSources('config', [
-                    new ProfileAwareSource('database', $profiles, [
+                    new ProfileAwareSource('database', $profiles->toArray(), [
                         'dev' => new PhpIncludeValueProvider($configDir . '/database.dev.php'),
                         'unit-test' => new PhpIncludeValueProvider($configDir . '/database.test.php'),
                         'prod' => new PhpIncludeValueProvider($configDir . '/database.prod.php')
@@ -44,10 +41,11 @@ final readonly class ContainerBootstrap {
         $parameterStoreFactory = new DelegatedParameterStoreFactory(new DefaultParameterStoreFactory());
         $parameterStoreFactory->addParameterStoreFactory('config', $factory);
 
-        return new Bootstrap(
-            logger: $this->logger,
+        return Bootstrap::fromAnnotatedContainerConventions(
+            new PhpDiContainerFactory($emitter),
+            $emitter,
             parameterStoreFactory: $parameterStoreFactory
-        );
+        )->bootstrapContainer($profiles);
     }
 
 }

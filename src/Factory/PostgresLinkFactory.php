@@ -7,8 +7,8 @@ use Amp\Postgres\DefaultPostgresConnector;
 use Amp\Postgres\PostgresConfig;
 use Amp\Postgres\PostgresConnectionPool;
 use Amp\Postgres\PostgresLink;
-use Amp\Sql\Link;
 use Amp\Sql\SqlConfig;
+use Amp\Sql\SqlConnection;
 use Amp\Sql\SqlConnector;
 use App\Configuration\DatabaseConfig;
 use Cspray\AnnotatedContainer\Attribute\ServiceDelegate;
@@ -42,7 +42,7 @@ final class PostgresLinkFactory {
                 private readonly string $searchPath
             ) {}
 
-            public function connect(SqlConfig $config, ?Cancellation $cancellation = null) : Link {
+            public function connect(SqlConfig $config, ?Cancellation $cancellation = null) : SqlConnection {
                 $link = $this->connector->connect($config, $cancellation);
                 $link->query('DISCARD ALL');
                 $link->query(sprintf('SET search_path TO %s', $this->searchPath));

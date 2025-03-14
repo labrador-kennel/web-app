@@ -5,10 +5,10 @@ namespace App\Configuration;
 use Amp\Socket\InternetAddress;
 use Cspray\AnnotatedContainer\Attribute\Inject;
 use Cspray\AnnotatedContainer\Attribute\Service;
-use Labrador\Web\Server\HttpServerConfiguration;
+use Labrador\Web\Server\HttpServerSettings;
 
 #[Service]
-final readonly class ServerConfig implements HttpServerConfiguration {
+final readonly class ServerConfig implements HttpServerSettings {
 
     public function __construct(
         #[Inject('server.totalConnectionLimit', from: 'config')]
@@ -27,27 +27,27 @@ final readonly class ServerConfig implements HttpServerConfiguration {
         private string $tlsCertificatePath
     ) {}
 
-    public function getUnencryptedInternetAddresses() : array {
+    public function unencryptedInternetAddresses() : array {
         return [
             new InternetAddress('0.0.0.0', $this->httpPort)
         ];
     }
 
-    public function getEncryptedInternetAddresses() : array {
+    public function encryptedInternetAddresses() : array {
         return [
             new InternetAddress('0.0.0.0', $this->httpsPort)
         ];
     }
 
-    public function getTlsCertificateFile() : ?string {
+    public function tlsCertificateFile() : ?string {
         return $this->tlsCertificatePath;
     }
 
-    public function getTotalClientConnectionLimit() : int {
+    public function totalClientConnectionLimit() : int {
         return $this->totalConnectionLimit;
     }
 
-    public function getClientConnectionLimitPerIpAddress() : int {
+    public function clientConnectionLimitPerIpAddress() : int {
         return $this->connectionLimitPerClient;
     }
 }

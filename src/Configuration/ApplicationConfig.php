@@ -15,11 +15,9 @@ final readonly class ApplicationConfig {
         #[Inject('app.staticAssetDir', from: 'config')]
         public string $staticAssetDir,
 
-        #[Inject('app.autoRedirectHttps', from: 'config')]
-        public bool $autoRedirectHttps,
+        #[Inject('app.staticAssetUrlPrefix', from: 'config')]
+        public string $staticAssetUrlPrefix
 
-        #[Inject('app.autoRedirectHttpsPort', from: 'config')]
-        public ?int $autoRedirectHttpsPort
     ) {}
 
 }

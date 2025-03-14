@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<annotatedContainer xmlns="https://annotated-container.cspray.io/schema/annotated-container.xsd">
+<annotatedContainer xmlns="https://annotated-container.cspray.io/schema/annotated-container.xsd" version="3.0.0-alpha1">
   <scanDirectories>
     <source>
       <dir>src</dir>
@@ -19,12 +19,7 @@
     <definitionProvider>Labrador\Web\Autowire\DefinitionProvider</definitionProvider>
     <definitionProvider>App\Autowire\DefinitionProvider</definitionProvider>
   </definitionProviders>
-  <observers>
-    <observer>Labrador\AsyncEvent\Autowire\Observer</observer>
-    <observer>Labrador\Web\Autowire\Observer</observer>
-  </observers>
   <parameterStores>
     <parameterStore>config</parameterStore>
   </parameterStores>
-  <!-- <cacheDir>.annotated-container-cache</cacheDir> -->
 </annotatedContainer>

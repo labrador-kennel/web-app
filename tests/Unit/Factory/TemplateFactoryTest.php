@@ -19,8 +19,7 @@ final class TemplateFactoryTest extends TestCase {
         $this->config = new ApplicationConfig(
             dirname(__DIR__, 3) . '/resources/templates',
             dirname(__DIR__, 3) . '/resources/assets',
-            true,
-            9118
+            'assets',
         );
     }
 
