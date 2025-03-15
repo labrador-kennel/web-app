@@ -12,23 +12,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.3
-          extensions: xdebug
-          tools: composer:2
-          ini-file: development
-      - name: Setup problem matchers for PHP
-        run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
-      - name: Setup problem matchers for PHPUnit
-        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
-      - name: Composer
-        run: composer install
-      - name: Composer (Testing Tools)
-        run: cd tools/phpunit && composer install
       - name: Just
         uses: extractions/setup-just@v2
+      - name: Docker Compose Build
+        run: docker compose build
       - name: Docker Compose Up
         run: docker compose up --force-recreate
       - name: Unit Testing
