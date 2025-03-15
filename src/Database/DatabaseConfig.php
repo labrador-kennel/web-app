@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Configuration;
+namespace App\Database;
 
 use Cspray\AnnotatedContainer\Attribute\Inject;
 use Cspray\AnnotatedContainer\Attribute\Service;

@@ -1,30 +1,25 @@
 <?php declare(strict_types=1);
 
-namespace App\Tests\Unit\Configuration;
+namespace App\Tests\Unit;
 
-use App\Configuration\ApplicationConfig;
-use App\Configuration\LabradorConfig;
+use App\ApplicationConfig;
 use Labrador\AsyncEvent\AmpEmitter;
 use Labrador\AsyncEvent\Emitter;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-#[
-    CoversClass(LabradorConfig::class),
-    CoversClass(ApplicationConfig::class)
-]
-final class LabradorConfigTest extends TestCase {
+#[CoversClass(ApplicationConfig::class)]
+final class ApplicationConfigTest extends TestCase {
 
 
-    private LabradorConfig $subject;
+    private ApplicationConfig $subject;
 
     protected function setUp() : void {
-        $applicationConfig = new ApplicationConfig(
+        $this->subject = new ApplicationConfig(
             'template-dir',
             'static-asset-dir',
             'assets'
         );
-        $this->subject = new LabradorConfig($applicationConfig);
     }
 
     public function testGetStaticAssetDirectory() : void {
@@ -37,10 +32,6 @@ final class LabradorConfigTest extends TestCase {
 
     public function testGetSessionMiddleware() : void {
         self::assertNotNull($this->subject->getSessionMiddleware());
-    }
-
-    public function testGetAmpEmitter() : void {
-        self::assertInstanceOf(Emitter::class, new AmpEmitter());
     }
 
 }

@@ -1,17 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace App\Tests\Unit\Factory;
+namespace App\Tests\Unit\Template;
 
-use App\Configuration\ApplicationConfig;
-use App\Factory\TemplateFactory;
+use App\ApplicationConfig;
+use App\Template\TemplateEngineFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[
-    CoversClass(TemplateFactory::class),
+    CoversClass(TemplateEngineFactory::class),
     CoversClass(ApplicationConfig::class)
 ]
-final class TemplateFactoryTest extends TestCase {
+final class TemplateEngineFactoryTest extends TestCase {
 
     private ApplicationConfig $config;
 
@@ -24,7 +24,7 @@ final class TemplateFactoryTest extends TestCase {
     }
 
     public function testPlatesEngineHasLayoutsFolder() : void {
-        $subject = TemplateFactory::createTemplates($this->config);
+        $subject = TemplateEngineFactory::createTemplates($this->config);
 
         $folders = $subject->getFolders();
 
@@ -32,7 +32,7 @@ final class TemplateFactoryTest extends TestCase {
     }
 
     public function testPlatesEngineHasComponentsFolder() : void {
-        $subject = TemplateFactory::createTemplates($this->config);
+        $subject = TemplateEngineFactory::createTemplates($this->config);
 
         $folders = $subject->getFolders();
 
@@ -40,7 +40,7 @@ final class TemplateFactoryTest extends TestCase {
     }
 
     public function testPlatesEngineHasPagesFolder() : void {
-        $subject = TemplateFactory::createTemplates($this->config);
+        $subject = TemplateEngineFactory::createTemplates($this->config);
 
         $folders = $subject->getFolders();
 
@@ -48,7 +48,7 @@ final class TemplateFactoryTest extends TestCase {
     }
 
     public function testPlatesEngineHasCorrectLayoutsPaths() : void {
-        $subject = TemplateFactory::createTemplates($this->config);
+        $subject = TemplateEngineFactory::createTemplates($this->config);
 
         $folders = $subject->getFolders();
 
@@ -59,7 +59,7 @@ final class TemplateFactoryTest extends TestCase {
     }
 
     public function testPlatesEngineHasCorrectComponentsPaths() : void {
-        $subject = TemplateFactory::createTemplates($this->config);
+        $subject = TemplateEngineFactory::createTemplates($this->config);
 
         $folders = $subject->getFolders();
 
@@ -70,7 +70,7 @@ final class TemplateFactoryTest extends TestCase {
     }
 
     public function testPlatesEngineHasCorrectPagesPaths() : void {
-        $subject = TemplateFactory::createTemplates($this->config);
+        $subject = TemplateEngineFactory::createTemplates($this->config);
 
         $folders = $subject->getFolders();
 

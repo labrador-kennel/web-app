@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace App\Tests\Unit\Configuration;
+namespace App\Tests\Unit\Http;
 
 use Amp\Socket\SocketAddressType;
-use App\Configuration\ServerConfig;
+use App\Http\ServerConfig;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Http\Controller;
+namespace App\Home\Controller;
 
 use Amp\Http\Server\Request;
 use Amp\Http\Server\Response;

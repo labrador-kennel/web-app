@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Configuration;
+namespace App\Http;
 
 use Amp\Socket\InternetAddress;
 use Cspray\AnnotatedContainer\Attribute\Inject;

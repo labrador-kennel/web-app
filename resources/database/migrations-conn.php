@@ -1,12 +1,9 @@
 <?php declare(strict_types=1);
 
 use App\ApplicationBootstrap;
-use App\Configuration\DatabaseConfig;
-use Cspray\AnnotatedContainer\Event\Emitter;
+use App\Database\DatabaseConfig;
 use Cspray\AnnotatedContainer\Profiles;
 use Doctrine\DBAL\DriverManager;
-use Labrador\AsyncEvent\Autowire\RegisterAutowiredListener;
-use Labrador\Web\Autowire\RegisterControllerListener;
 
 $profiles = getenv('PROFILES');
 if ($profiles === false) {

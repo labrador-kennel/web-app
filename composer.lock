@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e174f653d9dbfe27b7345a2a35c15b4",
+    "content-hash": "c48752b458fbb8da84eb7fe5381385a3",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -2713,12 +2713,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/labrador-kennel/framework.git",
-                "reference": "a6a97846abab5fc29db9f2a22fcc35377db336ca"
+                "reference": "1c1755075266421e4e0d84113b91c1e5a1b081bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/labrador-kennel/framework/zipball/a6a97846abab5fc29db9f2a22fcc35377db336ca",
-                "reference": "a6a97846abab5fc29db9f2a22fcc35377db336ca",
+                "url": "https://api.github.com/repos/labrador-kennel/framework/zipball/1c1755075266421e4e0d84113b91c1e5a1b081bc",
+                "reference": "1c1755075266421e4e0d84113b91c1e5a1b081bc",
                 "shasum": ""
             },
             "require": {
@@ -2778,7 +2778,7 @@
                 "issues": "https://github.com/labrador-kennel/framework/issues",
                 "source": "https://github.com/labrador-kennel/framework/tree/main"
             },
-            "time": "2025-03-14T14:33:37+00:00"
+            "time": "2025-03-15T10:19:51+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -6241,6 +6241,51 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "cspray/assert-throws",
+            "version": "0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cspray/assert-throws.git",
+                "reference": "86eeed2f882199803bf737cbbe11248db465b800"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cspray/assert-throws/zipball/86eeed2f882199803bf737cbbe11248db465b800",
+                "reference": "86eeed2f882199803bf737cbbe11248db465b800",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.2",
+                "phpunit/phpunit": "^10.0 | ^11.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/functions.php"
+                ],
+                "psr-4": {
+                    "Cspray\\AssertThrows\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Charles Sprayberry",
+                    "homepage": "https://cspray.io",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Assertions for PHPUnit when testing code that throws complex exceptions.",
+            "support": {
+                "issues": "https://github.com/cspray/assert-throws/issues",
+                "source": "https://github.com/cspray/assert-throws/tree/0.2.0"
+            },
+            "time": "2025-03-15T11:38:48+00:00"
+        },
         {
             "name": "cspray/database-test-case",
             "version": "0.3.0",

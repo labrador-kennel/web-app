@@ -6,5 +6,4 @@ return [
     'templateDir' => dirname(__DIR__) . '/templates',
     'staticAssetDir' => dirname(__DIR__) . '/assets',
     'staticAssetUrlPrefix' => 'assets',
-    'routesConfigFile' => __DIR__ . '/routes.php',
 ];

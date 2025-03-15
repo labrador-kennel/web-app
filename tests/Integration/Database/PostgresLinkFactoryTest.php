@@ -1,17 +1,28 @@
 <?php declare(strict_types=1);
 
-namespace App\Tests\Unit\Factory;
+namespace App\Tests\Integration\Database;
 
 use Amp\Postgres\PostgresLink;
-use App\Factory\PostgresLinkFactory;
+use App\Database\DatabaseConfig;
+use App\Database\PostgresLinkFactory;
 use App\Tests\DatabaseTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(PostgresLinkFactory::class)]
+#[CoversClass(DatabaseConfig::class)]
 final class PostgresLinkFactoryTest extends DatabaseTestCase {
 
     public function testPostgresLinkHasCorrectSchemaSet() : void {
-        $postgres = $this->getContainer()->get(PostgresLink::class);
+        $config = new DatabaseConfig(
+            'postgres',
+            'web_app_test',
+            'database',
+            5432,
+            'postgres',
+            'password',
+            1
+        );
+        $postgres = PostgresLinkFactory::createPostgresLink($config);
 
         self::assertInstanceOf(PostgresLink::class, $postgres);
         self::assertSame(

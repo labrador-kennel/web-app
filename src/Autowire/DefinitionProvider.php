@@ -14,7 +14,6 @@ final class DefinitionProvider implements AnnotatedContainerDefinitionProvider {
 
     public function consume(DefinitionProviderContext $context) : void {
         $context->addServiceDefinition(service(types()->class(Engine::class)));
-        $context->addServiceDefinition(service(types()->class(LoggerInterface::class)));
         $context->addServiceDefinition(service(types()->class(PostgresLink::class)));
     }
 

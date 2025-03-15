@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace App\Factory;
+namespace App\Template;
 
-use App\Configuration\ApplicationConfig;
+use App\ApplicationConfig;
 use Cspray\AnnotatedContainer\Attribute\ServiceDelegate;
 use League\Plates\Engine;
 
-final class TemplateFactory {
+final class TemplateEngineFactory {
 
     private function __construct() {}
 

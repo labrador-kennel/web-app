@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Factory;
+namespace App\Database;
 
 use Amp\Cancellation;
 use Amp\Postgres\DefaultPostgresConnector;
@@ -10,7 +10,6 @@ use Amp\Postgres\PostgresLink;
 use Amp\Sql\SqlConfig;
 use Amp\Sql\SqlConnection;
 use Amp\Sql\SqlConnector;
-use App\Configuration\DatabaseConfig;
 use Cspray\AnnotatedContainer\Attribute\ServiceDelegate;
 
 final class PostgresLinkFactory {
