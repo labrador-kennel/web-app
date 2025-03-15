@@ -27,10 +27,16 @@ jobs:
         run: composer install
       - name: Composer (Testing Tools)
         run: cd tools/phpunit && composer install
+      - name: Just
+        uses: extractions/setup-just@v2
+      - name: Docker Compose Up
+        run: docker compose up --force-recreate
       - name: Unit Testing
         env:
           XDEBUG_MODE: coverage
-        run: ./tools/phpunit/vendor/bin/phpunit
+        run: just test
+      - name: Docker Compose Down
+        run: docker compose down --remove-orphans
 
   static-analysis:
     runs-on: ubuntu-latest
@@ -48,5 +54,11 @@ jobs:
         run: composer install
       - name: Composer (Static Analysis Tools)
         run: cd tools/psalm && composer install
+      - name: Just
+        uses: extractions/setup-just@v2
+      - name: Docker Compose Up
+        run: docker compose up --force-recreate
       - name: Static Analysis
-        run: ./tools/psalm/vendor/bin/psalm --output-format=github
+        run: just static-analysis
+      - name: Docker Compose Down
+        run: docker compose down --remove-orphans
