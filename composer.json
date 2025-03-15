@@ -4,7 +4,7 @@
   "license": ["MIT"],
   "minimum-stability": "alpha",
   "require": {
-    "php": "^8.2",
+    "php": "^8.3",
     "ext-pcntl": "*",
     "amphp/postgres": "^v2.0",
     "cspray/annotated-container-secrets": "^0.3",
@@ -14,9 +14,6 @@
     "voku/stringy": "^6.5"
   },
   "require-dev": {
-    "cspray/assert-throws": "^0.2",
-    "cspray/database-test-case": "^0.3",
-    "phpunit/phpunit": "^10.0",
     "psalm/phar": "^5.11"
   },
   "autoload": {

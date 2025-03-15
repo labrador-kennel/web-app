@@ -63,4 +63,15 @@ migrate-prod:
     docker compose run -e PROFILES="default,prod,docker,migrations" --rm --entrypoint="vendor/bin/doctrine-migrations migrate --configuration=/app/resources/database/migrations-config.php --db-configuration=/app/resources/database/migrations-conn.php --no-interaction" toolbox
 
 test:
-    docker compose run -e PROFILES="default,test,docker" --rm --entrypoint="vendor/bin/phpunit" toolbox
+    docker compose run -e PROFILES="default,test,docker" --rm --entrypoint="tools/phpunit/vendor/bin/phpunit" toolbox
+
+static-analysis:
+    docker compose run -e PROFILES="default,test,docker" --rm --entrypoint="tools/psalm/vendor/bin/psalm" toolbox
+
+# Set the baseline of known issues to be used during static analysis
+static-analysis-set-baseline:
+    docker compose run -e PROFILES="default,test,docker" --rm --entrypoint="tools/psalm/vendor/bin/psalm --set-baseline=known-issues.xml --no-cache" toolbox
+
+# Update the baseline to _remove_ fixed issues. If new issues are to be added please use static-analysis-set-baseline
+static-analysis-update-baseline *FLAGS:
+    docker compose run -e PROFILES="default,test,docker" --rm --entrypoint="tools/psalm/vendor/bin/psalm --update-baseline --no-cache {{FLAGS}}" toolbox

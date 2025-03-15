@@ -27,6 +27,25 @@ RUN --mount=type=cache,target=/root/.composer \
     --mount=from=composer:2,source=/usr/bin/composer,target=/usr/bin/composer \
     composer install --prefer-dist --no-scripts
 
+FROM composer-base AS composer-phpunit
+
+RUN mkdir -p tools/phpunit
+COPY --link tools/phpunit/composer.json tools/phpunit/composer.json
+
+RUN --mount=type=cache,target=/root/.composer \
+    --mount=from=composer:2,source=/usr/bin/composer,target=/usr/bin/composer \
+    cd tools/phpunit && composer install --prefer-dist --no-scripts
+
+FROM composer-base AS composer-psalm
+
+RUN mkdir -p tools/psalm
+COPY --link tools/psalm/composer.json tools/psalm/composer.json
+
+RUN --mount=type=cache,target=/root/.composer \
+    --mount=from=composer:2,source=/usr/bin/composer,target=/usr/bin/composer \
+    cd tools/psalm && composer install --prefer-dist --no-scripts
+
+
 FROM composer-base AS composer-update
 RUN --mount=type=cache,target=/root/.composer \
     --mount=from=composer:2,source=/usr/bin/composer,target=/usr/bin/composer \
@@ -36,6 +55,10 @@ FROM scratch AS composer-output
 
 COPY --link --from=composer-dev /app/composer.lock .
 COPY --link --from=composer-dev /app/vendor vendor
+COPY --link --from=composer-phpunit /app/tools/phpunit/composer.lock tools/phpunit/composer.lock
+COPY --link --from=composer-phpunit /app/tools/phpunit/vendor tools/phpunit/vendor
+COPY --link --from=composer-psalm /app/tools/psalm/composer.lock tools/psalm/composer.lock
+COPY --link --from=composer-psalm /app/tools/psalm/vendor tools/psalm/vendor
 
 FROM scratch AS composer-output-updated
 
@@ -66,11 +89,17 @@ RUN docker-php-ext-enable pcov
 
 COPY --link phpunit.xml .
 COPY --link tests tests
+COPY --link tools tools
 COPY --link --from=composer-dev /app/vendor vendor
 
 RUN --mount=type=cache,target=/root/.composer \
     --mount=source=composer.json,target=composer.json \
     --mount=source=composer.lock,target=composer.lock \
+    --mount=from=composer:2,source=/usr/bin/composer,target=/usr/bin/composer \
+    composer install --prefer-dist
+
+RUN --mount=type=cache,target=/root/.composer \
+    --mount=source=tools/phpunit/composer.json,target=composer.json \
     --mount=from=composer:2,source=/usr/bin/composer,target=/usr/bin/composer \
     composer install --prefer-dist
 

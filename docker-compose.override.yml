@@ -8,10 +8,7 @@ services:
       - "8118:80"
       - "9118:443"
     volumes:
-      - ./app.php:/app/app.php
-      - ./resources:/app/resources
-      - ./src:/app/src
-      - ./tests:/app/tests
+      - .:/app
 
   toolbox:
     volumes:

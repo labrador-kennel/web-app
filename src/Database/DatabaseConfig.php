@@ -8,6 +8,9 @@ use Cspray\AnnotatedContainer\Attribute\Service;
 #[Service]
 final readonly class DatabaseConfig {
 
+    /**
+     * @param int<1, max> $poolConnectionLimit
+     */
     public function __construct(
         #[Inject('database.database', from: 'config')]
         public string $database,

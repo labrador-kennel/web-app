@@ -10,6 +10,7 @@ use Labrador\Logging\LoggerFactory;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
+use Override;
 use Psr\Log\LoggerInterface;
 use function Amp\ByteStream\getStdout;
 
@@ -20,6 +21,7 @@ final class ApplicationLoggerFactory implements LoggerFactory {
         private readonly Profiles $activeProfiles
     ) {}
 
+    #[Override]
     public function createLogger() : LoggerInterface {
         if ($this->activeProfiles->isActive('test') && !$this->activeProfiles->isActive('migrations')) {
             $handler = new TestHandler();

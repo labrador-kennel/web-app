@@ -11,6 +11,7 @@ use Cspray\AnnotatedContainer\Attribute\Inject;
 use Cspray\AnnotatedContainer\Attribute\Service;
 use Labrador\Web\Application\ApplicationSettings;
 use Labrador\Web\Application\StaticAssetSettings;
+use Override;
 
 #[Service(primary: true)]
 final readonly class ApplicationConfig implements ApplicationSettings {
@@ -26,6 +27,7 @@ final readonly class ApplicationConfig implements ApplicationSettings {
         public string $staticAssetUrlPrefix
     ) {}
 
+    #[Override]
     public function getSessionMiddleware() : ?SessionMiddleware {
         return new SessionMiddleware(
             new SessionFactory(
@@ -36,6 +38,7 @@ final readonly class ApplicationConfig implements ApplicationSettings {
         );
     }
 
+    #[Override]
     public function getStaticAssetSettings() : ?StaticAssetSettings {
         return new StaticAssetSettings(
             $this->staticAssetDir,

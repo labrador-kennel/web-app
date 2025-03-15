@@ -8,6 +8,7 @@ use Labrador\Web\Autowire\HttpController;
 use Labrador\Web\Controller\SelfDescribingController;
 use Labrador\Web\Router\Mapping\GetMapping;
 use League\Plates\Engine as TemplateEngine;
+use Override;
 
 #[HttpController(new GetMapping('/'))]
 final class Home extends SelfDescribingController {
@@ -16,6 +17,7 @@ final class Home extends SelfDescribingController {
         private readonly TemplateEngine $templates
     ) {}
 
+    #[Override]
     public function handleRequest(Request $request) : Response {
         return new Response(
             headers: ['Content-Type' => 'text/html; charset=utf-8'],
