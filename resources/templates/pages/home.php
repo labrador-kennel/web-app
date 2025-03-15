@@ -70,38 +70,62 @@ HTML;
     </div>
     <div class="hero-foot">
         <div class="has-text-centered">
-            <a href="#features-marker" class="has-text-black">
-                <ion-icon size="large" name="chevron-down-sharp"></ion-icon>
+            <a href="#Controllers & Routing" class="has-text-white">
+                Check out some code!
             </a>
         </div>
     </div>
 </section>
 
-<span id="features-marker"></span>
 <?php
 foreach ($features as $index => $feature):
     $isAltRow = $index % 2 === 0;
-    $heroClass = $isAltRow ? 'has-background-white-ter' : '';
 ?>
-    <section class="feature-hero <?= $heroClass ?> py-6">
-        <div class="container">
-            <h2 class="title"><?= $this->e($feature['title']) ?></h2>
-            <div class="columns">
-                <div class="column is-half">
-                    <?php if ($isAltRow): ?>
-                        <p><?= $feature['description'] ?></p>
-                    <?php else: ?>
-                        <?= $tabs(create($feature['title'])->slugify(), $isAltRow, $feature['tabs']) ?>
-                    <?php endif ?>
-                </div>
-                <div class="column is-half">
-                    <?php if ($isAltRow): ?>
-                        <?= $tabs(create($feature['title'])->slugify(), $isAltRow, $feature['tabs']) ?>
-                    <?php else: ?>
-                        <p><?= $feature['description'] ?></p>
-                    <?php endif ?>
+    <section id="<?= $feature['title'] ?>" class="hero is-fullheight">
+        <div class="hero-head">
+            <?php
+            $previousFeature = $features[$index - 1] ?? null;
+            if ($previousFeature !== null):
+            ?>
+            <div class="has-text-centered">
+                <a href="#<?= $previousFeature['title'] ?>" class="has-text-white">
+                    Back
+                </a>
+            </div>
+            <?php endif ?>
+        </div>
+        <div class="hero-body">
+            <div class="container">
+                <h2 class="title"><?= $this->e($feature['title']) ?></h2>
+                <div class="columns">
+                    <div class="column is-half">
+                        <?php if ($isAltRow): ?>
+                            <p><?= $feature['description'] ?></p>
+                        <?php else: ?>
+                            <?= $tabs(create($feature['title'])->slugify(), $isAltRow, $feature['tabs']) ?>
+                        <?php endif ?>
+                    </div>
+                    <div class="column is-half">
+                        <?php if ($isAltRow): ?>
+                            <?= $tabs(create($feature['title'])->slugify(), $isAltRow, $feature['tabs']) ?>
+                        <?php else: ?>
+                            <p><?= $feature['description'] ?></p>
+                        <?php endif ?>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="hero-foot">
+            <?php
+            $nextFeature = $features[$index + 1] ?? null;
+            if ($nextFeature !== null):
+            ?>
+            <div class="has-text-centered">
+                <a href="#<?= $nextFeature['title'] ?>" class="has-text-white">
+                    Next
+                </a>
+            </div>
+            <?php endif ?>
         </div>
     </section>
 <?php endforeach ?>

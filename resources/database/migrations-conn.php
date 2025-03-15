@@ -1,5 +1,8 @@
 <?php declare(strict_types=1);
 
+use App\ApplicationBootstrap;
+use App\Database\DatabaseConfig;
+use Cspray\AnnotatedContainer\Profiles;
 use Doctrine\DBAL\DriverManager;
 
 $profiles = getenv('PROFILES');
@@ -8,12 +11,12 @@ if ($profiles === false) {
         'You MUST provide a comma-separated list of profiles to use when running migrations.'
     );
 }
-$profiles = (new \Cspray\AnnotatedContainer\Profiles\CsvActiveProfilesParser())->parse($profiles);
+$profiles = Profiles::fromCommaDelimitedString($profiles);
 
-$container = (new \App\ContainerBootstrap(new \Psr\Log\NullLogger()))->createContainerBootstrap($profiles)->bootstrapContainer($profiles);
-$dbConfig = $container->get(\App\Configuration\DatabaseConfig::class);
+$container = (new ApplicationBootstrap())->bootstrapContainer($profiles);
+$dbConfig = $container->get(DatabaseConfig::class);
 
-assert($dbConfig instanceof \App\Configuration\DatabaseConfig);
+assert($dbConfig instanceof DatabaseConfig);
 
 $connection = DriverManager::getConnection([
     'dbname' => $dbConfig->database,

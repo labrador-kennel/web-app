@@ -2,20 +2,18 @@
   "name": "labrador-kennel/web-app",
   "description": "Skeleton for a typical Labrador framework application.",
   "license": ["MIT"],
-  "minimum-stability": "beta",
+  "minimum-stability": "alpha",
   "require": {
-    "php": "^8.2",
+    "php": "^8.3",
     "ext-pcntl": "*",
     "amphp/postgres": "^v2.0",
-    "cspray/annotated-container-secrets": "dev-main",
+    "cspray/annotated-container-secrets": "^0.3",
     "doctrine/migrations": "^3.6",
     "labrador-kennel/framework": "dev-main",
     "league/plates": "^3.5",
     "voku/stringy": "^6.5"
   },
   "require-dev": {
-    "cspray/database-test-case": "^0.3",
-    "phpunit/phpunit": "^10.0",
     "psalm/phar": "^5.11"
   },
   "autoload": {

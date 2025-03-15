@@ -23,6 +23,6 @@ abstract class DatabaseTestCase extends DbTestCase {
     }
 
     protected static function getTestProfile() : string {
-        return 'unit-test';
+        return 'test';
     }
 }
