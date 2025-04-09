@@ -1,7 +1,7 @@
 <?php
 
 /** @var \League\Plates\Template\Template $this */
-/** @var list<array{title: string, description: string, tabs: list<array{name: string, path: string}>}> $features */
+/** @var \App\Home\Controller\HomeTemplateData $data */
 
 use function Stringy\create;
 
@@ -78,7 +78,7 @@ HTML;
 </section>
 
 <?php
-foreach ($features as $index => $feature):
+foreach ($data->features as $index => $feature):
     $isAltRow = $index % 2 === 0;
 ?>
     <section id="<?= $feature['title'] ?>" class="hero is-fullheight">

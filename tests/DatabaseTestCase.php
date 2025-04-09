@@ -2,6 +2,7 @@
 
 namespace App\Tests;
 
+use Amp\Postgres\PostgresConnection;
 use Amp\Postgres\PostgresLink;
 use App\Tests\Helper\ContainerHelper;
 use Cspray\AnnotatedContainer\AnnotatedContainer;
@@ -15,7 +16,7 @@ abstract class DatabaseTestCase extends DbTestCase {
 
     protected static function getConnectionAdapter() : ConnectionAdapter {
         self::$container = ContainerHelper::bootstrapTestContainer(['default', static::getTestProfile(), 'web', 'docker']);
-        return AmpPostgresConnectionAdapter::existingConnection(self::$container->get(PostgresLink::class));
+        return AmpPostgresConnectionAdapter::existingConnection(self::$container->get(PostgresConnection::class));
     }
 
     protected function getContainer() : AnnotatedContainer {

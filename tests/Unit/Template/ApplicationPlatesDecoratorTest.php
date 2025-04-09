@@ -3,54 +3,57 @@
 namespace App\Tests\Unit\Template;
 
 use App\ApplicationConfig;
-use App\Template\TemplateEngineFactory;
+use App\Template\ApplicationPlatesDecorator;
+use League\Plates\Engine as TemplateEngine;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[
-    CoversClass(TemplateEngineFactory::class),
+    CoversClass(ApplicationPlatesDecorator::class),
     CoversClass(ApplicationConfig::class)
 ]
-final class TemplateEngineFactoryTest extends TestCase {
+final class ApplicationPlatesDecoratorTest extends TestCase {
 
     private ApplicationConfig $config;
+    private ApplicationPlatesDecorator $subject;
+    private TemplateEngine $engine;
 
     protected function setUp() : void {
         $this->config = new ApplicationConfig(
             dirname(__DIR__, 3) . '/resources/templates',
-            dirname(__DIR__, 3) . '/resources/assets',
-            'assets',
         );
+        $this->subject = new ApplicationPlatesDecorator($this->config);
+        $this->engine = new TemplateEngine();
     }
 
     public function testPlatesEngineHasLayoutsFolder() : void {
-        $subject = TemplateEngineFactory::createTemplates($this->config);
+        $this->subject->decorate($this->engine);
 
-        $folders = $subject->getFolders();
+        $folders = $this->engine->getFolders();
 
         self::assertTrue($folders->exists('layouts'));
     }
 
     public function testPlatesEngineHasComponentsFolder() : void {
-        $subject = TemplateEngineFactory::createTemplates($this->config);
+        $this->subject->decorate($this->engine);
 
-        $folders = $subject->getFolders();
+        $folders = $this->engine->getFolders();
 
         self::assertTrue($folders->exists('components'));
     }
 
     public function testPlatesEngineHasPagesFolder() : void {
-        $subject = TemplateEngineFactory::createTemplates($this->config);
+        $this->subject->decorate($this->engine);
 
-        $folders = $subject->getFolders();
+        $folders = $this->engine->getFolders();
 
         self::assertTrue($folders->exists('pages'));
     }
 
     public function testPlatesEngineHasCorrectLayoutsPaths() : void {
-        $subject = TemplateEngineFactory::createTemplates($this->config);
+        $this->subject->decorate($this->engine);
 
-        $folders = $subject->getFolders();
+        $folders = $this->engine->getFolders();
 
         self::assertSame(
             $this->config->templateDir . '/layouts',
@@ -59,9 +62,9 @@ final class TemplateEngineFactoryTest extends TestCase {
     }
 
     public function testPlatesEngineHasCorrectComponentsPaths() : void {
-        $subject = TemplateEngineFactory::createTemplates($this->config);
+        $this->subject->decorate($this->engine);
 
-        $folders = $subject->getFolders();
+        $folders = $this->engine->getFolders();
 
         self::assertSame(
             $this->config->templateDir . '/components',
@@ -70,9 +73,9 @@ final class TemplateEngineFactoryTest extends TestCase {
     }
 
     public function testPlatesEngineHasCorrectPagesPaths() : void {
-        $subject = TemplateEngineFactory::createTemplates($this->config);
+        $this->subject->decorate($this->engine);
 
-        $folders = $subject->getFolders();
+        $folders = $this->engine->getFolders();
 
         self::assertSame(
             $this->config->templateDir . '/pages',

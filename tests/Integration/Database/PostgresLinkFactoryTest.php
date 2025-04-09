@@ -4,11 +4,11 @@ namespace App\Tests\Integration\Database;
 
 use Amp\Postgres\PostgresLink;
 use App\Database\DatabaseConfig;
-use App\Database\PostgresLinkFactory;
+use App\Database\PostgresConnectionFactory;
 use App\Tests\DatabaseTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(PostgresLinkFactory::class)]
+#[CoversClass(PostgresConnectionFactory::class)]
 #[CoversClass(DatabaseConfig::class)]
 final class PostgresLinkFactoryTest extends DatabaseTestCase {
 
@@ -22,7 +22,7 @@ final class PostgresLinkFactoryTest extends DatabaseTestCase {
             'password',
             1
         );
-        $postgres = PostgresLinkFactory::createPostgresLink($config);
+        $postgres = PostgresConnectionFactory::createPostgresConnection($config);
 
         self::assertInstanceOf(PostgresLink::class, $postgres);
         self::assertSame(
