@@ -2,3 +2,4 @@
 build
 resources/certs/
 vendor/
+.env

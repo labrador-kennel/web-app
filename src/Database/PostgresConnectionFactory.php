@@ -7,17 +7,15 @@ use Amp\Postgres\DefaultPostgresConnector;
 use Amp\Postgres\PostgresConfig;
 use Amp\Postgres\PostgresConnection;
 use Amp\Postgres\PostgresConnectionPool;
-use Amp\Postgres\PostgresLink;
 use Amp\Sql\SqlConfig;
 use Amp\Sql\SqlConnection;
 use Amp\Sql\SqlConnector;
 use Cspray\AnnotatedContainer\Attribute\ServiceDelegate;
 use Override;
 
-final class PostgresLinkFactory {
-
+final class PostgresConnectionFactory {
     #[ServiceDelegate]
-    public static function createPostgresLink(DatabaseConfig $databaseConfig) : PostgresLink {
+    public static function createPostgresConnection(DatabaseConfig $databaseConfig) : PostgresConnection {
         $config = PostgresConfig::fromString(sprintf(
             'database=%s host=%s port=%d user=%s password=%s',
             $databaseConfig->database,
@@ -35,6 +33,10 @@ final class PostgresLinkFactory {
         );
     }
 
+    /**
+     * @param SqlConnector<PostgresConfig, PostgresConnection> $connector
+     * @return SqlConnector<PostgresConfig, PostgresConnection>
+     */
     private static function schemaSettingConnector(SqlConnector $connector, DatabaseConfig $databaseConfig) : SqlConnector {
         /**
          * @implements SqlConnector<PostgresConfig, PostgresConnection>
@@ -54,7 +56,5 @@ final class PostgresLinkFactory {
                 return $link;
             }
         };
-
     }
-
 }

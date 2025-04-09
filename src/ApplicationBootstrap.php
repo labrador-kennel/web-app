@@ -64,12 +64,13 @@ final readonly class ApplicationBootstrap {
 
     private function configParameterStoreFactory(Profiles $profiles) : ParameterStoreFactory {
         $configDir = dirname(__DIR__) . '/resources/config';
+        $databaseValueProvider = new PhpIncludeValueProvider($configDir . '/database.php');
         $factory = new ConfigParameterStoreFactory(
             (new IdentifierSourceMap())->withIdentifierAndSources('config', [
                 new ProfileAwareSource('database', $profiles->toArray(), [
-                    'dev' => new PhpIncludeValueProvider($configDir . '/database.dev.php'),
+                    'dev' => $databaseValueProvider,
+                    'prod' => $databaseValueProvider,
                     'test' => new PhpIncludeValueProvider($configDir . '/database.test.php'),
-                    'prod' => new PhpIncludeValueProvider($configDir . '/database.prod.php')
                 ]),
                 new SingleValueProviderSource('app', new PhpIncludeValueProvider($configDir . '/app.php')),
                 new SingleValueProviderSource('server', new PhpIncludeValueProvider($configDir . '/server.php'))

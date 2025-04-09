@@ -18,6 +18,7 @@ final class ServerConfigurationTest extends TestCase {
             10,
             80,
             443,
+            __FILE__,
             __FILE__
         );
     }

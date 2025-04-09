@@ -13,7 +13,7 @@ use App\Http\Exception\SessionNotSetOnRequest;
 use App\Http\Session\SessionAttribute;
 use App\Http\Session\SessionHelper;
 use Cspray\AssertThrows\ThrowableAssertTestCaseMethods;
-use Labrador\Web\TestHelper\KnownSessionIdGenerator;
+use Labrador\TestHelper\KnownSessionIdGenerator;
 use League\Uri\Http;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;

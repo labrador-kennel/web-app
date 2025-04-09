@@ -16,7 +16,6 @@ final readonly class ServerConfig implements HttpServerSettings {
      * @param int<1, max> $connectionLimitPerClient
      * @param int<0, 65535> $httpPort
      * @param int<0, 65535> $httpsPort
-     * @param string $tlsCertificatePath
      */
     public function __construct(
         #[Inject('server.totalConnectionLimit', from: 'config')]
@@ -32,7 +31,10 @@ final readonly class ServerConfig implements HttpServerSettings {
         private int $httpsPort,
 
         #[Inject('server.tlsCertificatePath', from: 'config')]
-        private string $tlsCertificatePath
+        private string $tlsCertificatePath,
+
+        #[Inject('server.tlsKeyPath', from: 'config')]
+        private string $tlsKeyPath,
     ) {}
 
     #[Override]
@@ -55,6 +57,11 @@ final readonly class ServerConfig implements HttpServerSettings {
     }
 
     #[Override]
+    public function tlsKeyFile() : ?string {
+        return $this->tlsKeyPath;
+    }
+
+    #[Override]
     public function totalClientConnectionLimit() : int {
         return $this->totalConnectionLimit;
     }
@@ -63,4 +70,5 @@ final readonly class ServerConfig implements HttpServerSettings {
     public function clientConnectionLimitPerIpAddress() : int {
         return $this->connectionLimitPerClient;
     }
+
 }
